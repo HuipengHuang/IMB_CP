@@ -25,16 +25,17 @@ def build_dataset(args):
             transforms.ToTensor(),
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
         ])
+
         if args.train_imb == "True":
-            train_dataset = IMBALANCECIFAR10(root=ROOT, train=True, download=True, transform=train_transform,
+            train_dataset = IMBALANCECIFAR10(root=ROOT, train=True, download=False, transform=train_transform,
                                              rand_number=10, imb_type=args.imb_type, imb_factor=args.imb_factor)
         else:
-            train_dataset = CIFAR10(root=ROOT, train=True, download=True, transform=train_transform)
+            train_dataset = CIFAR10(root=ROOT, train=True, download=False, transform=train_transform)
         if args.val_imb == "True":
-            cal_test_dataset = IMBALANCECIFAR10(root=ROOT, train=False, download=True, transform=val_transform,
+            cal_test_dataset = IMBALANCECIFAR10(root=ROOT, train=False, download=False, transform=val_transform,
                                                 rand_number=10, imb_type=args.imb_type, imb_factor=args.imb_factor)
         else:
-            cal_test_dataset = CIFAR10(root=ROOT, train=False, download=True,
+            cal_test_dataset = CIFAR10(root=ROOT, train=False, download=False,
                                  transform=val_transform)
     elif dataset_name == "cifar100":
         num_class = 100
@@ -50,13 +51,13 @@ def build_dataset(args):
             transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
         ])
         if args.train_imb == "True":
-            train_dataset = IMBALANCECIFAR100(root=ROOT, train=True, download=True, transform=train_transform)
+            train_dataset = IMBALANCECIFAR100(root=ROOT, train=True, download=False, transform=train_transform)
         else:
-            train_dataset = CIFAR100(root=ROOT, train=True, download=True, transform=train_transform)
+            train_dataset = CIFAR100(root=ROOT, train=True, download=False, transform=train_transform)
         if args.val_imb == "True":
-            cal_test_dataset = IMBALANCECIFAR100(root=ROOT, train=False, download=True, transform=val_transform)
+            cal_test_dataset = IMBALANCECIFAR100(root=ROOT, train=False, download=False, transform=val_transform)
         else:
-            cal_test_dataset = CIFAR100(root=ROOT, train=False, download=True,
+            cal_test_dataset = CIFAR100(root=ROOT, train=False, download=False,
                                        transform=val_transform)
 
     elif dataset_name == "imagenet":

@@ -8,8 +8,8 @@ def cp(args):
     train_dataset, cal_dataset, test_dataset, num_classes = build_dataset(args)
 
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
-    cal_loader = DataLoader(cal_dataset, batch_size=args.batch_size)
-    test_loader = DataLoader(test_dataset, batch_size=args.batch_size)
+    cal_loader = DataLoader(cal_dataset, batch_size=100)
+    test_loader = DataLoader(test_dataset, batch_size=100)
 
     trainer = get_trainer(args, num_classes)
 
@@ -35,7 +35,7 @@ def standard(args):
     train_dataset, _, test_dataset, num_classes = build_dataset(args)
 
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=args.batch_size)
+    test_loader = DataLoader(test_dataset, batch_size=100)
 
     trainer = get_trainer(args, num_classes)
 
