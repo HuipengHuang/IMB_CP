@@ -1,5 +1,5 @@
 import os
-from models.resnet_cifar import resnet20
+from models.resnet_cifar import resnet20, resnet32
 import torch
 import torchvision.models
 def build_model(model_type, pretrained, num_classes, device, args):
@@ -7,6 +7,8 @@ def build_model(model_type, pretrained, num_classes, device, args):
         use_norm = True if args.loss == 'LDAM' else False
         if model_type == "resnet20":
             net = resnet20(num_classes, use_norm)
+        elif model_type == "resnet32":
+            net = resnet32(num_classes, use_norm)
     else:
         if model_type == 'resnet18':
             net = torchvision.models.resnet18(weights=torchvision.models.ResNet18_Weights.IMAGENET1K_V1 if pretrained else None)
