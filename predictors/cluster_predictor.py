@@ -101,6 +101,7 @@ class ClusterPredictor:
 
             if self.k is None:
                 n_clustering, self.k = get_clustering_parameters(num_remaining_classes, n_min)
+                print(self.k)
                 cluster_frac = n_clustering / n_min
                 self.cluster_frac = cluster_frac
                 cluster_scores, cluster_targets, cal_scores, cal_targets = self.split_data(all_scores, all_targets, num_per_class)
