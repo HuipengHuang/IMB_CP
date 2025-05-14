@@ -107,4 +107,4 @@ class Trainer:
         else:
             lr = args.learning_rate
         for param_group in optimizer.param_groups:
-            param_group['learning_rate'] = lr
+            param_group['lr'] = lr
