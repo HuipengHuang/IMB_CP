@@ -6,7 +6,11 @@ from dataset.utils import build_dataset
 from predictors import predictor
 
 parser = argparse.ArgumentParser()
-
+parser.add_argument("--train_rule", type=str, default=None)
+parser.add_argument("--train_imb", type=str, default=None)
+parser.add_argument("--val_imb", type=str, default=None)
+parser.add_argument('--imb_type', default="exp", type=str, help='imbalance type')
+parser.add_argument('--imb_factor', default=0.01, type=float, help='imbalance factor')
 parser.add_argument("--model", type=str, default="resnet50", help='Choose neural network architecture.')
 parser.add_argument("--dataset", type=str, default="cifar100", choices=["cifar10", "cifar100", "imagenet"],
                     help="Choose dataset for training.")
@@ -26,7 +30,7 @@ parser.add_argument("--epochs", '-e', type=int, default=100, help='Number of epo
 parser.add_argument("--batch_size",'-bsz', type=int, default=32)
 parser.add_argument("--momentum", type=float, default=0, help='Momentum')
 parser.add_argument("--weight_decay", type=float, default=0, help='Weight decay')
-parser.add_argument("--loss", type=str,default='standard', choices=['standard', 'conftr', 'ua', "cadapter", "hinge"],
+parser.add_argument("--loss", type=str,default='standard', choices=['standard', 'conftr', 'ua', "cadapter", "hinge", "LDAM"],
                     help='Loss function you want to use. standard loss is Cross Entropy Loss.')
 
 #  Hyperpatameters for Conformal Prediction

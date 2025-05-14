@@ -19,3 +19,5 @@ def get_loss_function(args, predictor):
         return CAdapterLoss(args, predictor)
     elif args.loss == "standard":
         return nn.CrossEntropyLoss()
+    elif args.loss == "focal":
+        return FocalLoss(weight=1)
