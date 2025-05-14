@@ -73,7 +73,7 @@ class Trainer:
             warnings.warn('Loss type is not listed')
             return
 
-        for data, target in tqdm(train_loader, desc=f"{epoch}"):
+        for data, target in tqdm(train_loader, desc=f"{epoch+1}"):
             self.train_batch(data, target)
 
     def train(self, data_loader, epochs):

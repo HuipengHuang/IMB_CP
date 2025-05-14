@@ -29,7 +29,7 @@ class LDAMLoss(nn.Module):
         super(LDAMLoss, self).__init__()
         m_list = 1.0 / np.sqrt(np.sqrt(cls_num_list))
         m_list = m_list * (max_m / np.max(m_list))
-        m_list = torch.cuda.FloatTensor(m_list)
+        m_list = torch.tensor(m_list).cuda()
         self.m_list = m_list
         assert s > 0
         self.s = s
@@ -44,5 +44,5 @@ class LDAMLoss(nn.Module):
         batch_m = batch_m.view((-1, 1))
         x_m = x - batch_m
 
-        output = torch.where(index, x_m, x)
+        output = torch.where(index.bool(), x_m, x)
         return F.cross_entropy(self.s * output, target, weight=self.weight)
