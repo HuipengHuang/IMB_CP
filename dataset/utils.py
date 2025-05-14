@@ -6,7 +6,7 @@ from torchvision.datasets import CIFAR100
 from torchvision.datasets import CIFAR10
 from .imb_cifar import IMBALANCECIFAR10, IMBALANCECIFAR100
 
-ROOT = "./data/dataset"
+ROOT = "~/dataset"
 
 def build_dataset(args):
     dataset_name = args.dataset
