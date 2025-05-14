@@ -25,7 +25,7 @@ parser.add_argument("--save_model", default=None, type=str, choices=["True", "Fa
 parser.add_argument("--optimizer", type=str, default="sgd", choices=["sgd", "adam"], help="Choose optimizer.")
 parser.add_argument("--learning_rate", "-lr", type=float, default=1e-1, help="Initial learning rate for optimizer")
 parser.add_argument("--epochs", '-e', type=int, default=100, help='Number of epochs to train')
-parser.add_argument("--batch_size",'-bsz', type=int, default=32)
+parser.add_argument("--batch_size",'-bsz', type=int, default=128)
 parser.add_argument("--momentum", type=float, default=0, help='Momentum')
 parser.add_argument("--weight_decay", type=float, default=0, help='Weight decay')
 parser.add_argument("--loss", type=str,default='standard', choices=['standard', 'conftr', 'ua', "cadapter", "hinge", "LDAM"],
