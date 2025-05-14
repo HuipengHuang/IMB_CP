@@ -120,22 +120,7 @@ def main_worker(gpu, ngpus_per_node, args):
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
 
-    # optionally resume from a checkpoint
-    if args.resume:
-        if os.path.isfile(args.resume):
-            print("=> loading checkpoint '{}'".format(args.resume))
-            checkpoint = torch.load(args.resume, map_location='cuda:0')
-            args.start_epoch = checkpoint['epoch']
-            best_acc1 = checkpoint['best_acc1']
-            if args.gpu is not None:
-                # best_acc1 may be from a checkpoint from a different GPU
-                best_acc1 = best_acc1.to(args.gpu)
-            model.load_state_dict(checkpoint['state_dict'])
-            optimizer.load_state_dict(checkpoint['optimizer'])
-            print("=> loaded checkpoint '{}' (epoch {})"
-                  .format(args.resume, checkpoint['epoch']))
-        else:
-            print("=> no checkpoint found at '{}'".format(args.resume))
+
 
     cudnn.benchmark = True
 
@@ -155,7 +140,7 @@ def main_worker(gpu, ngpus_per_node, args):
 
     if args.dataset == 'cifar10':
         train_dataset = IMBALANCECIFAR10(root='~/dataset', imb_type=args.imb_type, imb_factor=args.imb_factor,
-                                         rand_number=args.rand_number, train=True, download=True,
+                                         rand_number=10, train=True, download=True,
                                          transform=transform_train)
         val_dataset = datasets.CIFAR10(root='~/dataset', train=False, download=True, transform=transform_val)
     elif args.dataset == 'cifar100':
@@ -202,7 +187,6 @@ def main_worker(gpu, ngpus_per_node, args):
             per_cls_weights = torch.FloatTensor(per_cls_weights).cuda(args.gpu)
         elif args.train_rule == 'DRW':
             train_sampler = None
-            print(epoch==0)
             idx = epoch // 160
             betas = [0, 0.9999]
             effective_num = 1.0 - np.power(betas[idx], cls_num_list)

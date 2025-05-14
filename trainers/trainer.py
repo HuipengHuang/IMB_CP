@@ -77,6 +77,7 @@ class Trainer:
 
         for data, target in tqdm(train_loader, desc=f"{epoch+1}"):
             self.train_batch(data, target)
+
         if val_loader is not None:
             self.net.eval()
             with torch.no_grad():
