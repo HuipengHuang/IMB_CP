@@ -50,7 +50,7 @@ class Predictor:
         if self.threshold is None:
             raise ValueError("Threshold score is None. Please do calibration first.")
         self.net.eval()
-        num_classes = test_loader.dataset.num_classes
+        num_classes = self.args.num_classes
         with torch.no_grad():
             total_accuracy = 0
             total_coverage = 0
