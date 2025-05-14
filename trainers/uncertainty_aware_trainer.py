@@ -6,7 +6,7 @@ from .trainer import Trainer
 from common import utils
 
 
-class UncertaintyAwareTrainer(Trainer):
+class UncertaintyAwareTrainer():
     """
     PAPER: Training Uncertainty-Aware Classifiers with Conformalized Deep Learning
     LINK: https://arxiv.org/pdf/2205.05878
@@ -14,7 +14,7 @@ class UncertaintyAwareTrainer(Trainer):
     def __init__(self, args, num_classes):
         super().__init__(args, num_classes)
 
-    @overrides
+
     def train(self, data_loader, epochs):
         """This method is modified because
          uncertainty-aware training requires randomly split the training data into two disjoint set."""
