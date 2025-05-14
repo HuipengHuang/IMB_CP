@@ -41,8 +41,6 @@ class Trainer:
         self.adjust_learning_rate(self.optimizer, epoch, self.args)
         train_dataset = train_loader.dataset
         cls_num_list = train_dataset.get_cls_num_list()
-        print("clsas num")
-        print(cls_num_list)
         if self.args.train_rule == 'None':
             train_sampler = None
             per_cls_weights = None
