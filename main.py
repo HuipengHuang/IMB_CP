@@ -15,7 +15,7 @@ parser.add_argument("--dataset", type=str, default="cifar100", choices=["cifar10
 parser.add_argument('--seed', type=int, default=None)
 parser.add_argument("--pretrained", default="False", type=str, choices=["True", "False"])
 parser.add_argument("--save", default="False", choices=["True", "False"], type=str)
-parser.add_argument("--algorithm",'-alg', default="standard", choices=["standard", "uatr"],
+parser.add_argument("--algorithm",'-alg', default="cp", choices=["cp", "uatr", "standard"],
                     help="Uncertainty aware training use uatr. Otherwise use standard")
 parser.add_argument("--load", default="False", type=str, choices=["True", "False"])
 parser.add_argument("--predictor", default=None, type=str, choices=["local", "cluster"])
