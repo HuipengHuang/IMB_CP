@@ -47,7 +47,6 @@ class Predictor:
     def evaluate(self, test_loader):
         """Must be called after calibration.
         Output a dictionary containing Top1 Accuracy, Coverage and Average Prediction Set Size."""
-
         self.net.eval()
         num_classes = self.args.num_classes
         if self.threshold is not None:
@@ -97,20 +96,20 @@ class Predictor:
         else:
             total_samples = 0
             total_accuracy = 0
+            with torch.no_grad():
+                for data, target in test_loader:
+                    data, target = data.to(self.device), target.to(self.device)
+                    batch_size = target.shape[0]
+                    total_samples += batch_size
 
-            for data, target in test_loader:
-                data, target = data.to(self.device), target.to(self.device)
-                batch_size = target.shape[0]
-                total_samples += batch_size
+                    logit = self.net(data)
+                    prob = torch.softmax(logit, dim=-1)
+                    prediction = torch.argmax(prob, dim=-1)
+                    total_accuracy += (prediction == target).sum().item()
 
-                logit = self.net(data)
-                prob = torch.softmax(logit, dim=-1)
-                prediction = torch.argmax(prob, dim=-1)
-                total_accuracy += (prediction == target).sum().item()
-
-            accuracy = total_accuracy / total_samples
-            result_dict = {
-                f"{self.args.score}_Top1Accuracy": accuracy,
-            }
+                accuracy = total_accuracy / total_samples
+                result_dict = {
+                    f"{self.args.score}_Top1Accuracy": accuracy,
+                }
             return result_dict
 
