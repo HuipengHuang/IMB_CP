@@ -21,3 +21,5 @@ def get_loss_function(args, predictor):
         return nn.CrossEntropyLoss()
     elif args.loss == "focal":
         return FocalLoss(weight=1)
+    else:
+        return None
