@@ -86,10 +86,12 @@ def build_dataset(args):
             transform=val_transform
         )
 
-
-    cal_size = int(len(cal_test_dataset) * args.cal_ratio)
-    test_size = len(cal_test_dataset) - cal_size
-    cal_dataset, test_dataset = random_split(cal_test_dataset, [cal_size, test_size])
+    if args.algorithm != "standard":
+        cal_size = int(len(cal_test_dataset) * args.cal_ratio)
+        test_size = len(cal_test_dataset) - cal_size
+        cal_dataset, test_dataset = random_split(cal_test_dataset, [cal_size, test_size])
+    else:
+        cal_dataset, test_dataset = None, cal_test_dataset
     args.num_classes = num_class
     return train_dataset, cal_dataset, test_dataset, num_class
 

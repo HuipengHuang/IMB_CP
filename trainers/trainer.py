@@ -63,11 +63,11 @@ class Trainer:
         else:
             warnings.warn('Sample rule is not listed')
 
-        if self.args.loss == 'CE':
+        if self.args.loss == 'standard':
             self.loss_function = nn.CrossEntropyLoss(weight=per_cls_weights)
         elif self.args.loss == 'LDAM':
             self.loss_function = LDAMLoss(cls_num_list=cls_num_list, max_m=0.5, s=30, weight=per_cls_weights)
-        elif self.args.loss == 'Focal':
+        elif self.args.loss == 'focal':
             self.loss_function = FocalLoss(weight=per_cls_weights, gamma=1)
         else:
             warnings.warn('Loss type is not listed')

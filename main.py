@@ -1,9 +1,6 @@
 import argparse
-from torch.utils.data import DataLoader
-from common.utils import set_seed, save_exp_result
-from trainers.get_trainer import get_trainer
-from dataset.utils import build_dataset
-from predictors import predictor
+from common.utils import set_seed
+from common import algorithm
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--split", default=None, type=str)
@@ -61,7 +58,6 @@ parser.add_argument("--mu_size", type=float, default=None,
 
 # Hyperparameter for clustered CP
 parser.add_argument("--k", type=int, default=None, help="Number of cluster center in kmeans algorithm")
-parser.add_argument("--null_qhat", default="standard", type=str, help="If standard, use standard calibration for classses belong to null.")
 
 
 args = parser.parse_args()
@@ -69,42 +65,7 @@ seed = args.seed
 if seed:
     set_seed(seed)
 
-train_dataset, cal_dataset, test_dataset, num_classes = build_dataset(args)
-
-train_loader = DataLoader(train_dataset, batch_size=args.batch_size, drop_last=True)
-cal_loader = DataLoader(cal_dataset, batch_size=args.batch_size)
-test_loader = DataLoader(test_dataset, batch_size=args.batch_size)
-
-trainer = get_trainer(args, num_classes)
-
-trainer.train(train_loader, args.epochs)
-
-del train_loader
-del train_dataset
-
-trainer.predictor.calibrate(cal_loader)
-del cal_loader
-
-result_dict = trainer.predictor.evaluate(test_loader)
-
-for key, value in result_dict.items():
-    print(f'{key}: {value}')
-
-
-if args.save == "True":
-    save_exp_result(args, result_dict)
-
-"""for score in ["thr", "aps", "raps", "saps"]:
-    args.score = score
-    args.saps_size_penalty_weight = 1
-    args.raps_size_penalty_weight = 1
-    args.raps_size_regularization = 1
-    trainer.predictor = predictor.Predictor(args, trainer.net)
-    trainer.predictor.calibrate(cal_loader)
-    sub_result_dict = trainer.predictor.evaluate(test_loader)
-    print("-----")
-    print(f"Score function: {score}")
-    print(f"threshold: {trainer.predictor.threshold}")
-    for key, value in sub_result_dict.items():
-        print(f'{key}: {value}')
-        result_dict[key] = value"""
+if args.algorithm == "standard":
+    algorithm.standard(args)
+else:
+    algorithm.cp(args)
