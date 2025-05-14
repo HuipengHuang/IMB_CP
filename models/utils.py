@@ -5,8 +5,7 @@ import torchvision.models
 def build_model(model_type, pretrained, num_classes, device, args):
     if args.dataset == "cifar10" or args.dataset == "cifar100":
         use_norm = True if args.loss == 'LDAM' else False
-        print("usenorm")
-        print(use_norm)
+
         if model_type == "resnet20":
             net = resnet20(num_classes, use_norm)
         elif model_type == "resnet32":

@@ -89,11 +89,11 @@ class BasicBlock(nn.Module):
 
 class ResNet_s(nn.Module):
 
-    def __init__(self, block, num_blocks, num_classes=10, use_norm=False, features = 3):
+    def __init__(self, block, num_blocks, num_classes=10, use_norm=False):
         super(ResNet_s, self).__init__()
         self.in_planes = 16
 
-        self.conv1 = nn.Conv2d(features, 16, kernel_size=3, stride=1, padding=1, bias=False)
+        self.conv1 = nn.Conv2d(3, 16, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(16)
         self.layer1 = self._make_layer(block, 16, num_blocks[0], stride=1)
         self.layer2 = self._make_layer(block, 32, num_blocks[1], stride=2)
@@ -121,34 +121,31 @@ class ResNet_s(nn.Module):
         out = F.avg_pool2d(out, out.size()[3])
         out = out.view(out.size(0), -1)
         out = self.linear(out)
-        #print(f"out = {out.shape}")
-        #exit(1)
         return out
 
 
-def resnet20(num_classes=10, use_norm=False, features = 3):
-    #print(f"num_classes1 = {num_classes}")
-    return ResNet_s(BasicBlock, [3, 3, 3], num_classes = num_classes, use_norm = use_norm, features = features)
+def resnet20():
+    return ResNet_s(BasicBlock, [3, 3, 3])
 
 
-def resnet32(num_classes=10, use_norm=False, features = 3):
-    return ResNet_s(BasicBlock, [5, 5, 5], num_classes=num_classes, use_norm=use_norm, features = features)
+def resnet32(num_classes=10, use_norm=False):
+    return ResNet_s(BasicBlock, [5, 5, 5], num_classes=num_classes, use_norm=use_norm)
 
 
-def resnet44(num_classes=10, use_norm=False, features = 3):
-    return ResNet_s(BasicBlock, [7, 7, 7], num_classes=num_classes, use_norm=use_norm, features = features)
+def resnet44():
+    return ResNet_s(BasicBlock, [7, 7, 7])
 
 
-def resnet56(num_classes=10, use_norm=False, features = 3):
-    return ResNet_s(BasicBlock, [9, 9, 9], num_classes=num_classes, use_norm=use_norm, features = features)
+def resnet56():
+    return ResNet_s(BasicBlock, [9, 9, 9])
 
 
-def resnet110(num_classes=10, use_norm=False, features = 3):
-    return ResNet_s(BasicBlock, [18, 18, 18], num_classes=num_classes, use_norm=use_norm, features = features)
+def resnet110():
+    return ResNet_s(BasicBlock, [18, 18, 18])
 
 
-def resnet1202(num_classes=10, use_norm=False, features = 3):
-    return ResNet_s(BasicBlock, [200, 200, 200], num_classes=num_classes, use_norm=use_norm, features = features)
+def resnet1202():
+    return ResNet_s(BasicBlock, [200, 200, 200])
 
 
 def test(net):
