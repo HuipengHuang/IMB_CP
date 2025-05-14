@@ -154,10 +154,10 @@ def main_worker(gpu, ngpus_per_node, args):
     ])
 
     if args.dataset == 'cifar10':
-        train_dataset = IMBALANCECIFAR10(root='./data/dataset', imb_type=args.imb_type, imb_factor=args.imb_factor,
+        train_dataset = IMBALANCECIFAR10(root='~/dataset', imb_type=args.imb_type, imb_factor=args.imb_factor,
                                          rand_number=args.rand_number, train=True, download=True,
                                          transform=transform_train)
-        val_dataset = datasets.CIFAR10(root='./data', train=False, download=True, transform=transform_val)
+        val_dataset = datasets.CIFAR10(root='~/dataset', train=False, download=True, transform=transform_val)
     elif args.dataset == 'cifar100':
         train_dataset = IMBALANCECIFAR100(root='./data', imb_type=args.imb_type, imb_factor=args.imb_factor,
                                           rand_number=args.rand_number, train=True, download=True,
