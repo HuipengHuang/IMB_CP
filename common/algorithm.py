@@ -39,7 +39,7 @@ def standard(args):
 
     trainer = get_trainer(args, num_classes)
 
-    trainer.train(train_loader, args.epochs)
+    trainer.train(train_loader, args.epochs, test_loader)
 
     del train_loader
     del train_dataset
