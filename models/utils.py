@@ -5,7 +5,7 @@ import torchvision.models
 def build_model(model_type, pretrained, num_classes, device, args):
     if args.dataset == "cifar10" or args.dataset == "cifar100":
         use_norm = True if args.loss == 'LDAM' else False
-        net = models.__dict__[args.arch](num_classes=num_classes, use_norm=use_norm)
+        net = models.__dict__[model_type](num_classes=num_classes, use_norm=use_norm)
     else:
         if model_type == 'resnet18':
             net = torchvision.models.resnet18(weights=torchvision.models.ResNet18_Weights.IMAGENET1K_V1 if pretrained else None)
