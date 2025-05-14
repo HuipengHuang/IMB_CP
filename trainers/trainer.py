@@ -36,6 +36,8 @@ class Trainer:
         self.optimizer.step()
 
     def train_epoch(self, train_loader, epoch, val_loader=None):
+        self.net.train()
+
         self.adjust_learning_rate(self.optimizer, epoch, self.args)
         train_dataset = train_loader.dataset
         cls_num_list = train_dataset.get_cls_num_list()
@@ -76,17 +78,17 @@ class Trainer:
         for data, target in tqdm(train_loader, desc=f"{epoch+1}"):
             self.train_batch(data, target)
         if val_loader is not None:
-            top1 = 0
-            for data, target in val_loader:
-                data, target = data.to(self.device), target.to(self.device)
-                logits = self.net(data)
-                pred = torch.argmax(logits, dim=-1)
-                top1 += pred.eq(target).sum().item()
-            print(f"Top1 accuracy of Epoch:{epoch+1} {top1 / len(val_loader.dataset)}")
+            self.net.eval()
+            with torch.no_grad():
+                top1 = 0
+                for data, target in val_loader:
+                    data, target = data.to(self.device), target.to(self.device)
+                    logits = self.net(data)
+                    pred = torch.argmax(logits, dim=-1)
+                    top1 += pred.eq(target).sum().item()
+                print(f"Top1 accuracy of Epoch:{epoch+1} {top1 / len(val_loader.dataset)}")
 
     def train(self, train_loader, epochs, val_loader=None):
-        self.net.train()
-
         for epoch in range(epochs):
             self.train_epoch(train_loader=train_loader, epoch=epoch, val_loader=val_loader)
 
@@ -104,5 +106,6 @@ class Trainer:
             lr = args.learning_rate * 0.01
         else:
             lr = args.learning_rate
+        print(lr)
         for param_group in optimizer.param_groups:
             param_group['learning_rate'] = lr
