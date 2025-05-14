@@ -88,12 +88,12 @@ class Trainer:
         """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
         epoch = epoch + 1
         if epoch <= 5:
-            lr = args.lr * epoch / 5
+            lr = args.learning_rate * epoch / 5
         elif epoch > 180:
-            lr = args.lr * 0.0001
+            lr = args.learning_rate * 0.0001
         elif epoch > 160:
-            lr = args.lr * 0.01
+            lr = args.learning_rate * 0.01
         else:
-            lr = args.lr
+            lr = args.learning_rate
         for param_group in optimizer.param_groups:
-            param_group['lr'] = lr
+            param_group['learning_rate'] = lr
