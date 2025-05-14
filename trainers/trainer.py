@@ -78,6 +78,7 @@ class Trainer:
         if val_loader is not None:
             top1 = 0
             for data, target in val_loader:
+                data, target = data.to(self.device), target.to(self.device)
                 logits = self.net(data)
                 pred = torch.argmax(logits, dim=-1)
                 top1 += pred.eq(target).sum().item()
