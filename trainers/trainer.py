@@ -8,6 +8,7 @@ from loss.utils import get_loss_function
 from .utils import get_optimizer
 from predictors.get_predictor import get_predictor
 from loss.losses import LDAMLoss, FocalLoss
+from tqdm import tqdm
 class Trainer:
     """
     Trainer class that implement all the functions regarding training.
@@ -72,7 +73,7 @@ class Trainer:
             warnings.warn('Loss type is not listed')
             return
 
-        for data, target in train_loader:
+        for data, target in tqdm(train_loader, desc=f"{epoch}"):
             self.train_batch(data, target)
 
     def train(self, data_loader, epochs):
