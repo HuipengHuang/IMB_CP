@@ -6,6 +6,7 @@ from dataset.utils import build_dataset
 from predictors import predictor
 
 parser = argparse.ArgumentParser()
+parser.add_argument("--split", default=None, type=str)
 parser.add_argument("--train_rule", type=str, default=None)
 parser.add_argument("--train_imb", type=str, default=None)
 parser.add_argument("--val_imb", type=str, default=None)
