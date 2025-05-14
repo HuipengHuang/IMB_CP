@@ -111,5 +111,5 @@ class Predictor:
                 result_dict = {
                     f"{self.args.score}_Top1Accuracy": accuracy,
                 }
-            return result_dict
+        return result_dict
 
