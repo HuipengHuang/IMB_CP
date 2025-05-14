@@ -29,7 +29,7 @@ class LDAMLoss(nn.Module):
         super(LDAMLoss, self).__init__()
         m_list = 1.0 / np.sqrt(np.sqrt(cls_num_list))
         m_list = m_list * (max_m / np.max(m_list))
-        m_list = torch.tensor(m_list).cuda()
+        m_list = torch.tensor(m_list, dtype=torch.float).cuda()
         self.m_list = m_list
         assert s > 0
         self.s = s
