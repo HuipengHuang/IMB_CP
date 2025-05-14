@@ -71,7 +71,7 @@ class ClusterPredictor:
         Returns:
             torch.Tensor: The smallest n.
         """
-        n = torch.tensor(0, device=alpha.device)
+        n = torch.tensor(0, device=self.device)
         while torch.ceil((n + 1) * (1 - alpha) / n) > 1:
             n += 1
         return n
