@@ -106,6 +106,5 @@ class Trainer:
             lr = args.learning_rate * 0.01
         else:
             lr = args.learning_rate
-        print(lr)
         for param_group in optimizer.param_groups:
             param_group['learning_rate'] = lr
