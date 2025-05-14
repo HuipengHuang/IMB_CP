@@ -106,7 +106,8 @@ def main_worker(gpu, ngpus_per_node, args):
     print("=> creating model '{}'".format(args.arch))
     num_classes = 100 if args.dataset == 'cifar100' else 10
     use_norm = True if args.loss_type == 'LDAM' else False
-    model = models.__dict__[args.arch](num_classes=num_classes, use_norm=use_norm)
+    from models.resnet_cifar import resnet32
+    model = resnet32(num_classes=num_classes, use_norm=use_norm)
 
     if args.gpu is not None:
         torch.cuda.set_device(args.gpu)
